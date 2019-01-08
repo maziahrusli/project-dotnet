@@ -54,6 +54,16 @@ namespace project_dotnet.Controllers
                 db.Feedbacks.Add(feedback);
                 return RedirectToAction("Index");
             }
+            var response = Request["g-recaptcha-response"];
+            string secretKey = "6LdUIIcUAAAAAMBc-yYrc-gJIvVQJC5EgILCl1a-";
+            var Client = new WebClient();
+            var result = Client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+            var obj = JObject.Parse(result);
+            bool v = (bool)obj.SelectToken("success");
+            var status = v;
+            ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation Failed!!";
+
+
 
             return View(feedback);
         }
@@ -124,21 +134,21 @@ namespace project_dotnet.Controllers
             base.Dispose(disposing);
         }
 
-        [HttpPost]
-        public ActionResult FormSubmit()
-        {
-            var response = Request["g-recaptcha-response"];
-            string secretKey = "6LdUIIcUAAAAAMBc-yYrc-gJIvVQJC5EgILCl1a-";
-            var Client = new WebClient();
-            var result = Client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
-            var obj = JObject.Parse(result);
-            bool v = (bool)obj.SelectToken("success");
-            var status = v;
-            ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation Failed!!";
+        //[HttpPost]
+        //public ActionResult FormSubmit()
+        //{
+        //    var response = Request["g-recaptcha-response"];
+        //    string secretKey = "6LdUIIcUAAAAAMBc-yYrc-gJIvVQJC5EgILCl1a-";
+        //    var Client = new WebClient();
+        //    var result = Client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secretKey, response));
+        //    var obj = JObject.Parse(result);
+        //    bool v = (bool)obj.SelectToken("success");
+        //    var status = v;
+        //    ViewBag.Message = status ? "Google reCaptcha validation success" : "Google reCaptcha validation Failed!!";
 
-            return View("Index");
+        //    return View("Index");
 
-        }
+        //}
 
         public ActionResult SaveRecord(FeedbackViewModel model)
         {
