@@ -1,0 +1,69 @@
+﻿@model project_dotnet.Models.FeedbackViewModel
+
+@{
+    ViewBag.Title = "Feedback";
+}
+
+
+
+<h2>Feedback</h2>
+
+@using (Html.BeginForm("SaveRecord", "Feedback", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>
+                <label class="text-left">Matric No :</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.MatricNo, new { @class = "form-control; " })
+                @*<input id="txt1" type="text" />*@
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="text-left">Full Name :</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                @*<input id="txt2" type="text" />*@
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="text-left">Residential :</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Residential, new { @class = "form-control", @placeholder = "exp : Tun Fatimah" })
+                @*<input id="txt3" type="text" placeholder="exp: Tun Fatimah" />*@
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+
+                <label class="text-left">Feedback :</label>
+            </td>
+
+            <td>
+                <div width="400px" ; height="300px">
+                    @Html.TextBoxFor(model => model.Answer, new { @class = "form-control" })
+                    @*<input id="txt4" type="text" />*@
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
+
+    
+
+    <span style="display: inline-block; font-size:20px; margin:20px 0;
+      padding:20px; border: 1px solid #D3D3D3">
+
+        @ViewBag.Message
+    </span>
+
+
+
+}
